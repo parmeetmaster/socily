@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "449449898444",
+    "project_id": "socilybrand-8f38e",
+    "storage_bucket": "socilybrand-8f38e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449449898444:android:bdb960084003d22a93ad69",
+        "android_client_info": {
+          "package_name": "com.digitalraiz.socilybrand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449449898444-nu77fr5eok2i7b6e0a5grk0m72d1kn90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBysXX_4RMibUcg4kLjetxSlOCnVCiOQ9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449449898444-nu77fr5eok2i7b6e0a5grk0m72d1kn90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
