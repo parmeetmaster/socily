@@ -7,10 +7,7 @@ class CategoryImageResponse {
   bool? login;
   List<Related_category>? relatedCategory;
 
-  CategoryImageResponse({
-      this.success, 
-      this.login, 
-      this.relatedCategory});
+  CategoryImageResponse({this.success, this.login, this.relatedCategory});
 
   CategoryImageResponse.fromJson(dynamic json) {
     success = json['success'];
@@ -28,11 +25,11 @@ class CategoryImageResponse {
     map['success'] = success;
     map['login'] = login;
     if (relatedCategory != null) {
-      map['related_category'] = relatedCategory?.map((v) => v.toJson()).toList();
+      map['related_category'] =
+          relatedCategory?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
 
 /// id : "2"
@@ -52,15 +49,17 @@ class Related_category {
   String? primeType;
   bool? active;
   String? type;
+  String? video;
 
-  Related_category({
-      this.id,
-    this.type,
-      this.category, 
-      this.subcategory, 
-      this.image, 
-      this.festival, 
-      this.primeType, 
+  Related_category(
+      {this.id,
+      this.type,
+      this.category,
+      this.subcategory,
+      this.image,
+      this.festival,
+      this.video,
+      this.primeType,
       this.active});
 
   Related_category.fromJson(dynamic json) {
@@ -68,8 +67,9 @@ class Related_category {
     category = json['category'];
     subcategory = json['subcategory'];
     image = json['image'];
-    type=json['type'];
+    type = json['type'];
     festival = json['festival'];
+    video = json['video'];
     primeType = json['prime_type'];
     active = json['active'];
   }
@@ -82,9 +82,9 @@ class Related_category {
     map['image'] = image;
     map['type'] = type;
     map['festival'] = festival;
+    map['video'] = video;
     map['prime_type'] = primeType;
     map['active'] = active;
     return map;
   }
-
 }

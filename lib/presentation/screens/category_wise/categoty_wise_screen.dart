@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 import 'package:socilybrand/constants/values.dart';
 import 'package:socilybrand/controller/category_controller/category_controller.dart';
@@ -9,7 +9,6 @@ import 'package:socilybrand/presentation/widgets/appbar/appbar.dart';
 import 'package:socilybrand/presentation/widgets/container/loading_container.dart';
 import 'package:socilybrand/presentation/widgets/grid_item/image_grid_active_item.dart';
 import 'package:socilybrand/utils/extension.dart';
-import 'package:video_player/video_player.dart';
 
 class CategoryWiseScreen extends StatefulWidget {
   CategoryWiseScreen({Key? key}) : super(key: key);
@@ -21,6 +20,18 @@ class CategoryWiseScreen extends StatefulWidget {
 class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
   CategoryController controller = Get.put(CategoryController());
 
+  late VlcPlayerController _videoPlayerController;
+
+  @override
+  void initState() {
+    _videoPlayerController = VlcPlayerController.network(
+      'https://media.w3.org/2010/05/sintel/trailer.mp4',
+      hwAcc: HwAcc.FULL,
+      autoPlay: true,
+      options: VlcPlayerOptions(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -30,6 +41,12 @@ class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
       if (controller.relatedCategory.isNotEmpty)
         selectedcategory = (controller.relatedCategory
             .value[controller.selectedindex.value] as Related_category);
+      if(selectedcategory.type=="video"){
+        controller.changeActiveVideo(controller.selectedindex.value);
+      }
+
+
+
       return Scaffold(
           appBar: FAppBar.getAppBarWithLanguage(),
           body: GetBuilder<CategoryController>(builder: (snapshot) {
@@ -39,8 +56,8 @@ class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
                       SizedBox(
                         height: 5,
                       ),
-                      if (selectedcategory.type == "image" ||
-                          selectedcategory.type == "frame")
+                       (selectedcategory.type == "image" ||
+                          selectedcategory.type == "frame")?
                         Container(
                           height: size.height * 0.4,
                           child: CachedNetworkImage(
@@ -49,16 +66,18 @@ class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
                               return selectedcategory.image;
                             }())}",
                           ),
-                        ),
-
+                        ):
                         Container(
                           height: size.height * 0.4,
-                          child:
-                             Container(
-                                  height: size.height * 0.4,
-                               child: VideoPlayer(
-                                   controller.videoPlayerController!),
-                                ),
+                          child: Container(
+                            height: size.height * 0.4,
+                            child: VlcPlayer(
+                              controller: controller.videoPlayerController,
+                              aspectRatio: 16 / 9,
+                              placeholder:
+                                  Center(child: CircularProgressIndicator()),
+                            ),
+                          ),
                         ),
                       GridView.count(
                         physics: NeverScrollableScrollPhysics(),
