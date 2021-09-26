@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socilybrand/constants/values.dart';
 import 'package:socilybrand/controller/dashboard_controller/dashboard_controller.dart';
-import 'package:socilybrand/presentation/widgets/container/image_grid_item.dart';
+import 'package:socilybrand/presentation/widgets/grid_item/image_grid_item.dart';
 import 'package:socilybrand/presentation/widgets/container/loading_container.dart';
 import 'package:socilybrand/presentation/widgets/divider/gradient_divider.dart';
 import 'package:socilybrand/presentation/widgets/slider/Fslider.dart';
@@ -18,7 +19,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   DashBoardController controller = Get.find();
-  final childAspectRatio = 0.95;
+  final childAspectRatio = Values.DASHBOARD_CHILD_ASPECT_RATIO;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _HomeTabState extends State<HomeTab> {
             SizedBox(
               height: 16.h,
             ),
-            Fslider(),
+            Fslider(FSLIDEROPR.DASHBOARD),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -59,7 +60,6 @@ class _HomeTabState extends State<HomeTab> {
                     height: 10.h,
                   ),
                 ])),
-
             Container(
               height: 165.h,
               width: MediaQuery.of(context).size.width,
@@ -69,25 +69,27 @@ class _HomeTabState extends State<HomeTab> {
                   shrinkWrap: true,
                   crossAxisCount: 1,
                   scrollDirection: Axis.horizontal,
-                  childAspectRatio:1.2,
+                  childAspectRatio: 1.2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   //physics:BouncingScrollPhysics(),
                   padding: EdgeInsets.all(10.0),
                   children: [
                     if (value.homeResponse != null)
-                      ...value.homeResponse!.imgCategory!.map((e) => ImageGridItem(
-                        src: e.image,
-                        type: gridType.IMAGE,
-                        text: e.festival,
+                      ...value.homeResponse!.imgCategory!.map(
+                        (e) => ImageGridItem(
+                          src: e.image,
+                          type: gridType.IMAGE,
+                          text: e.festival,
+                          onclick: (){
+                            controller.onClick(e.cid!);
+                          },
+                        ),
                       ),
-                      ),
-
                   ],
                 ),
               ),
             ),
-
             //videos
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -118,25 +120,36 @@ class _HomeTabState extends State<HomeTab> {
                     height: 10.h,
                   ),
                 ])),
-            GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              childAspectRatio: childAspectRatio,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 5,
-              //physics:BouncingScrollPhysics(),
-              padding: EdgeInsets.all(10.0),
-              children: [
-                if (value.homeResponse != null)
-                  ...value.homeResponse!.videoCategory!
-                      .map((e) => ImageGridItem(
-                            src: e.thumbImg,
-                            text: e.festival,
-                            type: gridType.IMAGE,
-                          )),
-              ],
+            Container(
+              height: 165.h,
+              width: MediaQuery.of(context).size.width,
+              child: Scrollbar(
+                controller: ScrollController(),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 1,
+                  scrollDirection: Axis.horizontal,
+                  childAspectRatio: 1.2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  //physics:BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(10.0),
+                  children: [
+                    if (value.homeResponse != null)
+                      ...value.homeResponse!.videoCategory!.map(
+                        (e) => ImageGridItem(
+                          src: e.thumbImg,
+                          type: gridType.IMAGE,
+                          text: e.festival,  onclick: (){
+                          controller.onClick(e.cid!);
+                        },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
+
             //frames
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -167,26 +180,39 @@ class _HomeTabState extends State<HomeTab> {
                     height: 10.h,
                   ),
                 ])),
-            GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              childAspectRatio: childAspectRatio,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 5,
-              //physics:BouncingScrollPhysics(),
-              padding: EdgeInsets.all(10.0),
-              children: [
-                if (value.homeResponse != null)
-                  ...value.homeResponse!.frameCategory!
-                      .map((e) => ImageGridItem(
-                            src: e.image,
-                            text: e.festival,
-                            type: gridType.IMAGE,
-                          )),
-                for (int i = 0; i < 3; i++) Container()
-              ],
+            Container(
+              height: 165.h,
+              width: MediaQuery.of(context).size.width,
+              child: Scrollbar(
+                controller: ScrollController(),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 1,
+                  scrollDirection: Axis.horizontal,
+                  childAspectRatio: 1.2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  //physics:BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(10.0),
+                  children: [
+                    if (value.homeResponse != null)
+                      ...value.homeResponse!.frameCategory!.map(
+                        (e) => ImageGridItem(
+                          src: e.image,
+                          type: gridType.IMAGE,
+                          text: e.festival,  onclick: (){
+                          controller.onClick(e.cid!);
+                        },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
+
+            const SizedBox(
+              height: 100,
+            )
           ]),
         );
       else

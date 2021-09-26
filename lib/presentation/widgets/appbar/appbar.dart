@@ -6,7 +6,7 @@ import 'package:socilybrand/presentation/widgets/container/app_icon.dart';
 import 'package:socilybrand/utils/utils.dart';
 
 class FAppBar {
-  static getDashBoardAppBar() {
+  static AppBar getDashBoardAppBar() {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
@@ -113,6 +113,76 @@ class FAppBar {
                               AppIcon(
                                 icon: Icons.notifications,
                                 shownum: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  static AppBar getAppBarWithLanguage() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+
+      toolbarHeight: 105.h, // Set this height
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 5.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Image.asset(
+                      ImageLocations.logotransparent,
+                      height: 95.h,
+                      width: 130.w,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 12.0.h),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 15.h),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                             Image.asset(ImageLocations.languageicon,height: 35.sp,),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              AppIcon(
+                                icon: Icons.download,
+                                shownum: true,
+                              ),
+                              SizedBox(
+                                width: 20.w,
                               ),
                             ],
                           ),

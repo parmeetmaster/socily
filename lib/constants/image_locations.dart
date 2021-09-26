@@ -20,4 +20,5 @@ class ImageLocations {
   static const person_orange = "${base_assets}/person-orange.png";
 
   static const down_arrow = "${base_assets}/down-arrow.png";
+  static const languageicon = "${base_assets}/languages.png";
 }

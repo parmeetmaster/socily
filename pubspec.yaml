@@ -48,6 +48,8 @@ dependencies:
   sms_autofill: ^2.1.2
   pin_code_fields: ^7.3.0
   carousel_slider: ^4.0.0
+  flutter_windowmanager: ^0.2.0
+  flutter_vlc_player: ^6.0.4
 
 
 

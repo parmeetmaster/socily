@@ -5,7 +5,7 @@ import 'package:socilybrand/constants/AppColors.dart';
 import 'package:socilybrand/controller/dashboard_controller/dashboard_controller.dart';
 import 'package:socilybrand/presentation/widgets/appbar/appbar.dart';
 import 'package:socilybrand/presentation/widgets/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:socilybrand/presentation/widgets/container/image_grid_item.dart';
+import 'package:socilybrand/presentation/widgets/grid_item/image_grid_item.dart';
 import 'package:socilybrand/presentation/widgets/divider/gradient_divider.dart';
 import 'package:socilybrand/presentation/widgets/slider/Fslider.dart';
 import 'package:socilybrand/presentation/widgets/text/heading_text.dart';
