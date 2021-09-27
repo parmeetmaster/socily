@@ -1,11 +1,12 @@
 import 'package:file_support/file_support.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+
 import 'package:socilybrand/api/api.dart';
 import 'package:socilybrand/api/methods/api_methods.dart';
 import 'package:socilybrand/api/routes.dart';
 import 'package:socilybrand/model/request/category_image/category_image_request.dart';
 import 'package:socilybrand/model/response/category/category_image_response.dart';
 import 'package:socilybrand/utils/utils.dart';
+import 'package:video_player/video_player.dart';
 
 
 class CategoryController extends GetxController {
@@ -13,7 +14,7 @@ class CategoryController extends GetxController {
 
   RxList relatedCategory = [].obs;
   Rx<int> selectedindex = 0.obs;
-  late VlcPlayerController videoPlayerController;
+  late VideoPlayerController videoPlayerController;
  // Rx<VlcAdvancedOptions> value=VlcAdvancedOptions().obs;
 
 
@@ -26,6 +27,14 @@ class CategoryController extends GetxController {
     loadCategory();
   }
 
+
+
+  @override
+  void onClose() {
+    if(videoPlayerController!=null){
+      videoPlayerController.dispose();
+    }
+  }
 
   @override
   void dispose() {
@@ -52,12 +61,14 @@ class CategoryController extends GetxController {
 
   void changeActiveVideo(int i) async {
     String? videoUrl=(relatedCategory.value[i] as Related_category).video;
-    videoPlayerController = VlcPlayerController.network(
-      videoUrl!,
-      hwAcc: HwAcc.FULL,
-      autoPlay: true,
-      options: VlcPlayerOptions(),
-    );
-    update();
+    videoPlayerController = VideoPlayerController.network(
+
+        videoUrl!)
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        videoPlayerController.play();
+        update();
+      });
+
   }
 }
