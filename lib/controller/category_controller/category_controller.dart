@@ -8,37 +8,27 @@ import 'package:socilybrand/model/response/category/category_image_response.dart
 import 'package:socilybrand/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
-
 class CategoryController extends GetxController {
   String id = "";
 
   RxList relatedCategory = [].obs;
   Rx<int> selectedindex = 0.obs;
+  RxBool videoLoading=true.obs;
+
   late VideoPlayerController videoPlayerController;
- // Rx<VlcAdvancedOptions> value=VlcAdvancedOptions().obs;
 
+  // Rx<VlcAdvancedOptions> value=VlcAdvancedOptions().obs;
 
-
-
-  @override
-  void onInit() async {
-
-
-    loadCategory();
-  }
-
-
-
-  @override
-  void onClose() {
-    if(videoPlayerController!=null){
-      videoPlayerController.dispose();
-    }
+  void onscreenClose() async {
+    videoPlayerController.pause();
+    videoLoading.value=true;
+    videoPlayerController.dispose();
+    relatedCategory.value.clear();
   }
 
   @override
   void dispose() {
-    if(videoPlayerController!=null){
+    if (videoPlayerController != null) {
       videoPlayerController.dispose();
     }
   }
@@ -51,7 +41,6 @@ class CategoryController extends GetxController {
     CategoryImageResponse? categoryImageResponse =
         CategoryImageResponse.fromJson(response.completeResponse);
     relatedCategory.value = categoryImageResponse.relatedCategory!;
-
     update();
   }
 
@@ -60,15 +49,20 @@ class CategoryController extends GetxController {
   }
 
   void changeActiveVideo(int i) async {
-    String? videoUrl=(relatedCategory.value[i] as Related_category).video;
-    videoPlayerController = VideoPlayerController.network(
+    videoLoading.value=true;
+    try{
+      videoPlayerController.dispose();
 
-        videoUrl!)
+    }catch(e){}
+
+    selectedindex.value = i;
+    String? videoUrl = (relatedCategory.value[i] as Related_category).video;
+    videoPlayerController = VideoPlayerController.network(videoUrl!)
       ..initialize().then((_) {
+        videoLoading.value=false;
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         videoPlayerController.play();
         update();
       });
-
   }
 }

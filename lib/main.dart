@@ -11,7 +11,10 @@ import 'package:socilybrand/utils/memory_management.dart';
 import 'package:socilybrand/utils/utils.dart';
 
 import 'constants/AppColors.dart';
+import 'constants/values.dart';
 import 'utils/firebase.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +40,9 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: Size(412, 847),
         builder: () => GetMaterialApp(
+              navigatorObservers: <RouteObserver<ModalRoute<void>>>[
+                routeObserver
+              ],
               builder: EasyLoading.init(),
               title: 'Flutter Demo',
               theme: ThemeData(

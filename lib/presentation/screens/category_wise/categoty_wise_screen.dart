@@ -11,6 +11,8 @@ import 'package:socilybrand/presentation/widgets/grid_item/image_grid_active_ite
 import 'package:socilybrand/utils/extension.dart';
 import 'package:video_player/video_player.dart';
 
+
+
 class CategoryWiseScreen extends StatefulWidget {
   CategoryWiseScreen({Key? key}) : super(key: key);
 
@@ -18,11 +20,24 @@ class CategoryWiseScreen extends StatefulWidget {
   _CategoryWiseScreenState createState() => _CategoryWiseScreenState();
 }
 
-class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
+class _CategoryWiseScreenState extends State<CategoryWiseScreen> with RouteAware  {
   CategoryController controller = Get.put(CategoryController());
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void didPop() {
+    print("scren close");
+    controller.onscreenClose();
+  }
 
   @override
   void initState() {
+   controller.loadCategory();
+
 
   }
 
@@ -65,9 +80,9 @@ class _CategoryWiseScreenState extends State<CategoryWiseScreen> {
                           height: size.height * 0.4,
                           child: Container(
                             height: size.height * 0.4,
-                            child: VideoPlayer(
+                            child: controller.videoLoading.value==false?VideoPlayer(
 
-                                controller.videoPlayerController),
+                                controller.videoPlayerController):Center(child: CircularProgressIndicator(),),
                           ),
                         ),
                       GridView.count(
